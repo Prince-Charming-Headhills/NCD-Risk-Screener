@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="google-site-verification" content="1fqjdfDeLXGPJH_z-lIQlygcWlDrtGmUd6Tdv3TPEHQ" />
+    <title>NCD Risk Screener – Heart & Lung</title>
+    <style>
+        /* ----- Global Reset & Base ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f5fc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 880px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.12);
+            padding: 30px 32px 40px;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ----- LANDING PAGE ----- */
+        #landingPage {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        #landingPage.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-icon {
+            font-size: 4.5rem;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .landing-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #0a2540;
+            text-align: center;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .landing-title span {
+            background: linear-gradient(135deg, #1a6bd0, #4a9eff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .landing-sub {
+            text-align: center;
+            color: #4a6a8a;
+            font-size: 1.1rem;
+            margin: 8px 0 16px 0;
+            font-weight: 400;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0 28px 0;
+        }
+        .feature-card {
+            background: #f7faff;
+            border-radius: 18px;
+            padding: 18px 20px;
+            border: 1px solid #e6eefa;
+            transition: 0.2s;
+        }
+        .feature-card:hover {
+            border-color: #b8d0e8;
+            background: #f4f9ff;
+        }
+        .feature-card .icon {
+            font-size: 1.7rem;
+            margin-bottom: 6px;
+        }
+        .feature-card h4 {
+            color: #0a2c4a;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .feature-card p {
+            color: #5a738e;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .landing-badge {
+            display: inline-block;
+            background: #e9f2fc;
+            color: #1a5a9a;
+            padding: 5px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin: 0 auto 14px auto;
+            text-align: center;
+        }
+
+        .disclaimer-box {
+            background: #f0f6fe;
+            border-radius: 16px;
+            padding: 14px 20px;
+            border-left: 4px solid #2a7de1;
+            margin: 16px 0 24px 0;
+            font-size: 0.85rem;
+            color: #2d4b6a;
+            line-height: 1.5;
+        }
+        .disclaimer-box strong {
+            color: #0a2c4a;
+        }
+
+        .btn-start {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1a6bd0, #3a8af0);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 20px rgba(26, 107, 208, 0.35);
+            text-align: center;
+        }
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(26, 107, 208, 0.4);
+        }
+        .btn-start:active {
+            transform: scale(0.98);
+        }
+
+        /* ----- FORM PAGE (hidden by default) ----- */
+        #formPage {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        #formPage.active {
+            display: block;
+        }
+
+        .back-to-landing {
+            background: none;
+            border: none;
+            color: #3a6a9a;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 4px 0;
+            margin-bottom: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-to-landing:hover {
+            color: #0a2c4a;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .form-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0a2540;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge {
+            background: #eef3fa;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1a4b7a;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+        .subhead {
+            color: #4a5b6e;
+            font-size: 0.95rem;
+            margin: 4px 0 16px 0;
+            border-left: 4px solid #2a7de1;
+            padding-left: 16px;
+            background: #f0f5ff;
+            border-radius: 0 12px 12px 0;
+            line-height: 1.5;
+            padding: 8px 16px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #e6edf5;
+            margin: 12px 0 20px 0;
+        }
+
+        /* ----- Progress bar ----- */
+        .progress-wrap {
+            background: #e9eef4;
+            border-radius: 40px;
+            height: 8px;
+            margin: 6px 0 18px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2a7de1, #6c9ef0);
+            border-radius: 40px;
+            transition: width 0.35s ease;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #3b5a7a;
+            margin-top: -12px;
+            margin-bottom: 16px;
+        }
+
+        /* ----- Questions (sections) ----- */
+        .question-section {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .question-section.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% { opacity: 0.4; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .q-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0a2c4a;
+            margin-bottom: 6px;
+        }
+        .q-desc {
+            color: #3e5a78;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        .q-group {
+            background: #f9fbfe;
+            padding: 16px 18px 10px 18px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            border: 1px solid #e3ebf5;
+        }
+        .q-label {
+            font-weight: 600;
+            color: #1f3b57;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.98rem;
+        }
+        .q-label small {
+            font-weight: 400;
+            color: #5b738e;
+            display: block;
+            margin-top: 2px;
+            font-size: 0.85rem;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            margin-bottom: 4px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: #1e3a5a;
+            cursor: pointer;
+            background: white;
+            padding: 6px 14px 6px 10px;
+            border-radius: 40px;
+            border: 1px solid #d5e0ec;
+            transition: 0.15s;
+            font-size: 0.92rem;
+        }
+        .options label:hover {
+            background: #eef5ff;
+            border-color: #a0bde0;
+        }
+        .options input[type="radio"],
+        .options input[type="checkbox"] {
+            accent-color: #1a6bd0;
+            width: 17px;
+            height: 17px;
+            margin: 0;
+        }
+
+        /* Age input styling */
+        .age-input-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .age-input-group input[type="number"] {
+            width: 120px;
+            padding: 10px 14px;
+            border: 2px solid #d5e0ec;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0a2540;
+            background: white;
+            transition: 0.2s;
+            outline: none;
+        }
+        .age-input-group input[type="number"]:focus {
+            border-color: #1a6bd0;
+            box-shadow: 0 0 0 4px rgba(26, 107, 208, 0.1);
+        }
+        .age-input-group input[type="number"]:invalid {
+            border-color: #dc3545;
+        }
+        .age-input-group .age-hint {
+            color: #5a738e;
+            font-size: 0.85rem;
+        }
+        .age-display {
+            font-weight: 700;
+            color: #1a6bd0;
+            font-size: 1.1rem;
+            min-width: 60px;
+        }
+
+        /* ----- Navigation buttons ----- */
+        .nav-btns {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 28px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: white;
+            border: 1.5px solid #cbd8e8;
+            padding: 11px 26px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1e3d60;
+            cursor: pointer;
+            transition: 0.15s;
+            background: #fafcff;
+            min-width: 100px;
+        }
+        .btn-primary {
+            background: #1a6bd0;
+            border-color: #1a6bd0;
+            color: white;
+            box-shadow: 0 4px 10px rgba(26, 107, 208, 0.25);
+        }
+        .btn-primary:hover {
+            background: #0f5abc;
+            border-color: #0f5abc;
+            transform: scale(1.01);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            transform: none;
+        }
+        .btn-secondary {
+            background: #e9f0f8;
+            border-color: #c5d6e9;
+        }
+        .btn-secondary:hover {
+            background: #dce7f3;
+        }
+        .btn-success {
+            background: #1f9d6a;
+            border-color: #1f9d6a;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #18855a;
+            border-color: #18855a;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ----- Results panel ----- */
+        #resultsPanel {
+            display: none;
+            margin-top: 10px;
+        }
+        .result-card {
+            background: #f2f8ff;
+            border-radius: 24px;
+            padding: 24px 28px;
+            border: 1px solid #d6e5fa;
+        }
+        .result-card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0a2540;
+            margin-bottom: 4px;
+        }
+        .risk-badge {
+            display: inline-block;
+            padding: 6px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 6px 0 14px 0;
+        }
+        .risk-low { background: #d4edda; color: #0b5e3a; }
+        .risk-moderate { background: #fff3cd; color: #856404; }
+        .risk-high { background: #f8d7da; color: #721c24; }
+        .risk-veryhigh { background: #dc3545; color: white; }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 18px 0 14px 0;
+        }
+        .score-item {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #e3ebf6;
+        }
+        .score-item .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5b738e;
+        }
+        .score-item .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0a2540;
+        }
+        .score-item .sub {
+            font-size: 0.8rem;
+            color: #3d627a;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #5a6f86;
+            background: #eaf1fa;
+            padding: 14px 18px;
+            border-radius: 16px;
+            margin-top: 18px;
+            border-left: 4px solid #2a7de1;
+        }
+        .disclaimer strong {
+            color: #0a2c4a;
+        }
+        .btn-restart {
+            background: transparent;
+            border: 1px solid #b4cbe0;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1f3b57;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: 0.15s;
+        }
+        .btn-restart:hover {
+            background: #eef5fc;
+        }
+
+        /* responsive */
+        @media (max-width: 650px) {
+            .container { padding: 20px 16px; }
+            .landing-title { font-size: 1.7rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .form-header h1 { font-size: 1.4rem; flex-wrap: wrap; }
+            .options label { padding: 5px 12px; font-size: 0.85rem; }
+            .btn { padding: 10px 18px; min-width: 70px; font-size: 0.85rem; }
+            .score-grid { grid-template-columns: 1fr; }
+            .nav-btns { flex-direction: column; align-items: stretch; }
+            .hero-icon { font-size: 3.2rem; }
+            .age-input-group input[type="number"] { width: 100px; }
+        }
+        @media (max-width: 400px) {
+            .landing-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+    <!-- ============================================================ -->
+    <!-- LANDING PAGE -->
+    <!-- ============================================================ -->
+    <div id="landingPage">
+        <div class="hero-icon">🫀</div>
+        <div class="landing-title">
+            NCD <span>Risk Screener</span>
+        </div>
+        <div class="landing-sub">
+            Evidence-based assessment for <strong>cardiovascular</strong> &amp; <strong>respiratory</strong> conditions
+        </div>
+
+        <div style="text-align:center; margin: 4px 0 2px 0;">
+            <span class="landing-badge">⚕️ Clinical-grade questionnaire</span>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon">❤️</div>
+                <h4>Cardiovascular Assessment</h4>
+                <p>Evaluates chest tightness, edema, orthopnea, and key cardiac risk factors.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🫁</div>
+                <h4>Respiratory Assessment</h4>
+                <p>Analyzes cough, wheezing, breathing patterns, and asthma triggers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h4>Dual-Score System</h4>
+                <p>Separate scores for cardiac and pulmonary risk with clear interpretation.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h4>Private &amp; Secure</h4>
+                <p>All data stays on your device. No information is stored or shared.</p>
+            </div>
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>⚠️ Important:</strong> This tool is designed for <strong>educational and risk assessment</strong> purposes only. 
+            It does <strong>not</strong> provide a medical diagnosis. Always consult a qualified healthcare professional 
+            for proper evaluation and treatment.
+        </div>
+
+        <button class="btn-start" id="enterFormBtn">
+            🚀 Start Assessment &nbsp;→
+        </button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FORM PAGE (hidden initially) -->
+    <!-- ============================================================ -->
+    <div id="formPage">
+        <button class="back-to-landing" id="backToLandingBtn">← Back to home</button>
+
+        <div class="form-header">
+            <h1>
+                <span>📋 NCD Risk Screener</span>
+                <span class="badge">Cardio + Respiratory</span>
+            </h1>
+        </div>
+        <div class="subhead">
+            ⚕️ Based on clinical guidelines — not a formal diagnosis. Always consult your doctor.
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-wrap">
+            <div class="progress-bar" id="progressBar" style="width:0%;"></div>
+        </div>
+        <div class="step-indicator">
+            <span id="stepText">Step 1 of 4</span>
+            <span id="stepCount">0%</span>
+        </div>
+
+        <hr />
+
+        <form id="ncdForm" novalidate>
+
+            <!-- SECTION 1: DEMOGRAPHICS & BASICS -->
+            <div class="question-section active" data-step="1">
+                <div class="q-title">👤 About you</div>
+                <div class="q-desc">Basic information to contextualize your risk.</div>
+
+                <!-- AGE - Now with numeric input -->
+                <div class="q-group">
+                    <span class="q-label">Age <small>Enter your exact age in years</small></span>
+                    <div class="age-input-group">
+                        <input type="number" id="ageInput" name="age" min="18" max="120" placeholder="e.g., 45" required />
+                        <span class="age-display" id="ageDisplay">—</span>
+                        <span class="age-hint">(18–120 years)</span>
+                    </div>
+                    <div style="margin-top:8px; font-size:0.8rem; color:#5a738e;">
+                        <span id="ageRiskNote">Age is a key risk factor for both cardiovascular and respiratory diseases.</span>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Sex assigned at birth</span>
+                    <div class="options">
+                        <label><input type="radio" name="sex" value="female" /> Female</label>
+                        <label><input type="radio" name="sex" value="male" /> Male</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Smoking status <small>Current or former regular smoker?</small></span>
+                    <div class="options">
+                        <label><input type="radio" name="smoking" value="never" /> Never</label>
+                        <label><input type="radio" name="smoking" value="former" /> Former</label>
+                        <label><input type="radio" name="smoking" value="current" /> Current</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: CHEST & BREATHING SYMPTOMS -->
+            <div class="question-section" data-step="2">
+                <div class="q-title">🫁 Chest & breathing patterns</div>
+                <div class="q-desc">These questions help differentiate cardiac from respiratory origins.</div>
+
+                <div class="q-group">
+                    <span class="q-label">Chest tightness or pressure — <strong>does it worsen with exertion</strong> and improve with rest?</span>
+                    <div class="options">
+                        <label><input type="radio" name="exertion_chest" value="yes" /> Yes, classic</label>
+                        <label><input type="radio" name="exertion_chest" value="no" /> No / not typical</label>
+                        <label><input type="radio" name="exertion_chest" value="unsure" /> Unsure</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Shortness of breath or chest pain that <strong>worsens with deep breathing or coughing</strong>?</span>
+                    <div class="options">
+                        <label><input type="radio" name="deep_breath_pain" value="yes" /> Yes</label>
+                        <label><input type="radio" name="deep_breath_pain" value="no" /> No</label>
+                        <label><input type="radio" name="deep_breath_pain" value="unsure" /> Unsure</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Do you have a <strong>persistent cough</strong> (more than 3 weeks), often with phlegm?</span>
+                    <div class="options">
+                        <label><input type="radio" name="chronic_cough" value="yes" /> Yes, with phlegm</label>
+                        <label><input type="radio" name="chronic_cough" value="dry" /> Yes, dry cough</label>
+                        <label><input type="radio" name="chronic_cough" value="no" /> No</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Do you experience <strong>wheezing</strong> (whistling sound when breathing)?</span>
+                    <div class="options">
+                        <label><input type="radio" name="wheezing" value="yes" /> Yes</label>
+                        <label><input type="radio" name="wheezing" value="no" /> No</label>
+                        <label><input type="radio" name="wheezing" value="sometimes" /> Sometimes</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: FLUID, ORTHOPNEA & TRIGGERS -->
+            <div class="question-section" data-step="3">
+                <div class="q-title">💧 Fluid, lying flat &amp; triggers</div>
+                <div class="q-desc">Key signs of heart failure and asthma / pulmonary reactivity.</div>
+
+                <div class="q-group">
+                    <span class="q-label">Swelling in ankles, feet, or legs (<strong>edema</strong>) or unexplained weight gain?</span>
+                    <div class="options">
+                        <label><input type="radio" name="edema" value="yes" /> Yes, noticeable</label>
+                        <label><input type="radio" name="edema" value="mild" /> Mild / occasional</label>
+                        <label><input type="radio" name="edema" value="no" /> No</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label"><strong>Orthopnea</strong> – do you get short of breath when lying flat (and need to sit up to breathe)?</span>
+                    <div class="options">
+                        <label><input type="radio" name="orthopnea" value="yes" /> Yes</label>
+                        <label><input type="radio" name="orthopnea" value="no" /> No</label>
+                        <label><input type="radio" name="orthopnea" value="sometimes" /> Sometimes</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Are your breathing symptoms triggered by <strong>allergens, exercise, or cold/weather changes</strong>?</span>
+                    <div class="options">
+                        <label><input type="radio" name="asthma_triggers" value="yes" /> Yes, clearly</label>
+                        <label><input type="radio" name="asthma_triggers" value="partial" /> Somewhat</label>
+                        <label><input type="radio" name="asthma_triggers" value="no" /> No</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: ADDITIONAL RISK FACTORS -->
+            <div class="question-section" data-step="4">
+                <div class="q-title">⚖️ Additional risk factors</div>
+                <div class="q-desc">These help refine overall cardiovascular and respiratory risk.</div>
+
+                <div class="q-group">
+                    <span class="q-label">Known high blood pressure or on antihypertensives?</span>
+                    <div class="options">
+                        <label><input type="radio" name="hypertension" value="yes" /> Yes</label>
+                        <label><input type="radio" name="hypertension" value="no" /> No</label>
+                        <label><input type="radio" name="hypertension" value="unknown" /> Unknown</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Known diabetes or prediabetes?</span>
+                    <div class="options">
+                        <label><input type="radio" name="diabetes" value="yes" /> Yes</label>
+                        <label><input type="radio" name="diabetes" value="no" /> No</label>
+                        <label><input type="radio" name="diabetes" value="unknown" /> Unknown</label>
+                    </div>
+                </div>
+
+                <div class="q-group">
+                    <span class="q-label">Family history of early heart disease or COPD/asthma?</span>
+                    <div class="options">
+                        <label><input type="radio" name="family_history" value="yes" /> Yes</label>
+                        <label><input type="radio" name="family_history" value="no" /> No</label>
+                        <label><input type="radio" name="family_history" value="unknown" /> Unknown</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-btns">
+                <button type="button" class="btn btn-secondary" id="prevBtn" disabled>← Back</button>
+                <span id="navCenter"></span>
+                <button type="button" class="btn btn-primary" id="nextBtn">Next →</button>
+                <button type="button" class="btn btn-success" id="submitBtn" style="display:none;">📊 Get Results</button>
+            </div>
+        </form>
+
+        <!-- Results Panel -->
+        <div id="resultsPanel">
+            <div class="result-card" id="resultContent">
+                <!-- dynamically filled -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // =============================================================
+        // PAGE SWITCHING
+        // =============================================================
+        const landingPage = document.getElementById('landingPage');
+        const formPage = document.getElementById('formPage');
+        const enterBtn = document.getElementById('enterFormBtn');
+        const backBtn = document.getElementById('backToLandingBtn');
+
+        function showLanding() {
+            landingPage.style.display = 'block';
+            formPage.classList.remove('active');
+            formPage.style.display = 'none';
+            document.getElementById('resultsPanel').style.display = 'none';
+            document.getElementById('ncdForm').style.display = 'block';
+            document.querySelector('.progress-wrap').style.display = 'block';
+            document.querySelector('.step-indicator').style.display = 'flex';
+            document.querySelector('hr').style.display = 'block';
+            document.querySelector('.subhead').innerHTML = 
+                '⚕️ Based on clinical guidelines — not a formal diagnosis. Always consult your doctor.';
+        }
+
+        function showForm() {
+            landingPage.style.display = 'none';
+            formPage.style.display = 'block';
+            requestAnimationFrame(() => {
+                formPage.classList.add('active');
+            });
+        }
+
+        enterBtn.addEventListener('click', showForm);
+        backBtn.addEventListener('click', showLanding);
+
+        // =============================================================
+        // FORM LOGIC
+        // =============================================================
+        const sections = document.querySelectorAll('.question-section');
+        const totalSteps = sections.length;
+        let currentStep = 0;
+
+        const progressBar = document.getElementById('progressBar');
+        const stepText = document.getElementById('stepText');
+        const stepCount = document.getElementById('stepCount');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultsPanel = document.getElementById('resultsPanel');
+        const resultContent = document.getElementById('resultContent');
+        const form = document.getElementById('ncdForm');
+        const ageInput = document.getElementById('ageInput');
+        const ageDisplay = document.getElementById('ageDisplay');
+        const ageRiskNote = document.getElementById('ageRiskNote');
+
+        // ----- Age helper functions -----
+        function getAgeValue() {
+            const val = parseInt(ageInput.value);
+            if (isNaN(val) || val < 18 || val > 120) return null;
+            return val;
+        }
+
+        function getAgeCategory(age) {
+            if (age === null) return null;
+            if (age < 30) return 'under30';
+            if (age < 40) return '30to39';
+            if (age < 50) return '40to49';
+            if (age < 60) return '50to59';
+            if (age < 70) return '60to69';
+            return '70plus';
+        }
+
+        function getAgeCardioScore(age) {
+            if (age === null) return 0;
+            // Progressive scoring based on clinical risk
+            if (age < 30) return 0;
+            if (age < 40) return 0.5;
+            if (age < 50) return 1.5;
+            if (age < 60) return 2.5;
+            if (age < 70) return 3.5;
+            return 4.5; // 70+
+        }
+
+        function getAgeRespScore(age) {
+            if (age === null) return 0;
+            if (age < 30) return 0;
+            if (age < 40) return 0;
+            if (age < 50) return 0.5;
+            if (age < 60) return 1.0;
+            if (age < 70) return 1.5;
+            return 2.0; // 70+
+        }
+
+        function getAgeRiskNote(age) {
+            if (age === null) return 'Enter your age to see personalized risk assessment.';
+            if (age < 30) return '✅ Low age-related risk. Most NCDs are uncommon at this age.';
+            if (age < 40) return '⚠️ Early adulthood — risk begins to increase gradually.';
+            if (age < 50) return '⚠️ Moderate age-related risk. Cardiovascular risk starts to rise.';
+            if (age < 60) return '🔶 Elevated risk. Regular screening is recommended.';
+            if (age < 70) return '🔶 High risk. Age is a major factor for both heart and lung disease.';
+            return '🔴 Very high age-related risk. Close monitoring is strongly advised.';
+        }
+
+        // Update age display and risk note
+        ageInput.addEventListener('input', function() {
+            const age = getAgeValue();
+            if (age !== null) {
+                ageDisplay.textContent = age + ' yrs';
+                ageDisplay.style.color = '#1a6bd0';
+                ageRiskNote.textContent = getAgeRiskNote(age);
+                // Add visual feedback
+                ageInput.style.borderColor = '#1a6bd0';
+            } else {
+                ageDisplay.textContent = '—';
+                ageDisplay.style.color = '#5a738e';
+                ageRiskNote.textContent = 'Enter your age to see personalized risk assessment.';
+                ageInput.style.borderColor = '#d5e0ec';
+            }
+            updateNextButton();
+        });
+
+        // ----- Get radio value -----
+        function getRadioValue(name) {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? el.value : null;
+        }
+
+        // ----- Progress -----
+        function updateProgress() {
+            const pct = Math.round(((currentStep + 1) / totalSteps) * 100);
+            progressBar.style.width = pct + '%';
+            stepText.textContent = `Step ${currentStep+1} of ${totalSteps}`;
+            stepCount.textContent = pct + '%';
+        }
+
+        function showStep(index) {
+            sections.forEach((sec, i) => {
+                sec.classList.toggle('active', i === index);
+            });
+            prevBtn.disabled = (index === 0);
+            if (index === totalSteps - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+            updateProgress();
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function isCurrentStepValid() {
+            const section = sections[currentStep];
+            
+            // Special validation for step 1 (includes age input)
+            if (currentStep === 0) {
+                const age = getAgeValue();
+                if (age === null) return false;
+                // Check sex and smoking radios
+                const sex = section.querySelector('input[name="sex"]:checked');
+                const smoking = section.querySelector('input[name="smoking"]:checked');
+                return sex !== null && smoking !== null;
+            }
+            
+            const radios = section.querySelectorAll('input[type="radio"]');
+            const names = new Set();
+            radios.forEach(r => names.add(r.name));
+            for (let name of names) {
+                const checked = section.querySelector(`input[name="${name}"]:checked`);
+                if (!checked) return false;
+            }
+            return true;
+        }
+
+        function updateNextButton() {
+            if (currentStep === totalSteps - 1) {
+                submitBtn.disabled = !isCurrentStepValid();
+            } else {
+                nextBtn.disabled = !isCurrentStepValid();
+            }
+        }
+
+        function goToStep(index) {
+            if (index < 0 || index >= totalSteps) return;
+            currentStep = index;
+            showStep(index);
+            updateNextButton();
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps - 1 && isCurrentStepValid()) {
+                goToStep(currentStep + 1);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                goToStep(currentStep - 1);
+            }
+        }
+
+        // ----- SCORING ENGINE (with granular age scoring) -----
+        function computeResults() {
+            const age = getAgeValue();
+            const sex = getRadioValue('sex');
+            const smoking = getRadioValue('smoking');
+            const exertionChest = getRadioValue('exertion_chest');
+            const deepBreath = getRadioValue('deep_breath_pain');
+            const chronicCough = getRadioValue('chronic_cough');
+            const wheezing = getRadioValue('wheezing');
+            const edema = getRadioValue('edema');
+            const orthopnea = getRadioValue('orthopnea');
+            const asthmaTriggers = getRadioValue('asthma_triggers');
+            const hypertension = getRadioValue('hypertension');
+            const diabetes = getRadioValue('diabetes');
+            const familyHistory = getRadioValue('family_history');
+
+            let cardioScore = 0;
+            // AGE - granular scoring
+            cardioScore += getAgeCardioScore(age);
+            
+            // Other cardio factors
+            if (smoking === 'current') cardioScore += 2;
+            else if (smoking === 'former') cardioScore += 1;
+            if (exertionChest === 'yes') cardioScore += 2;
+            if (edema === 'yes') cardioScore += 2;
+            else if (edema === 'mild') cardioScore += 1;
+            if (orthopnea === 'yes') cardioScore += 2;
+            else if (orthopnea === 'sometimes') cardioScore += 1;
+            if (hypertension === 'yes') cardioScore += 1;
+            if (diabetes === 'yes') cardioScore += 1;
+            if (familyHistory === 'yes') cardioScore += 1;
+            if (sex === 'male') cardioScore += 0.5;
+            cardioScore = Math.min(10, Math.round(cardioScore * 10) / 10);
+
+            let respScore = 0;
+            // AGE - granular scoring for respiratory
+            respScore += getAgeRespScore(age);
+            
+            // Other respiratory factors
+            if (smoking === 'current') respScore += 2;
+            else if (smoking === 'former') respScore += 1;
+            if (deepBreath === 'yes') respScore += 2;
+            if (chronicCough === 'yes') respScore += 2;
+            else if (chronicCough === 'dry') respScore += 1;
+            if (wheezing === 'yes') respScore += 2;
+            else if (wheezing === 'sometimes') respScore += 1;
+            if (asthmaTriggers === 'yes') respScore += 2;
+            else if (asthmaTriggers === 'partial') respScore += 1;
+            if (orthopnea === 'yes') respScore += 1;
+            if (familyHistory === 'yes') respScore += 1;
+            respScore = Math.min(10, Math.round(respScore * 10) / 10);
+
+            let primary = '', secondary = '', primaryScore = 0, secondaryScore = 0;
+            if (cardioScore >= respScore) {
+                primary = 'Cardiovascular';
+                primaryScore = cardioScore;
+                secondary = 'Respiratory';
+                secondaryScore = respScore;
+            } else {
+                primary = 'Respiratory';
+                primaryScore = respScore;
+                secondary = 'Cardiovascular';
+                secondaryScore = cardioScore;
+            }
+
+            let riskLevel = '';
+            if (primaryScore < 3) riskLevel = 'Low';
+            else if (primaryScore < 5.5) riskLevel = 'Moderate';
+            else if (primaryScore < 8) riskLevel = 'High';
+            else riskLevel = 'Very High';
+
+            const cardiacIndicators = [];
+            if (exertionChest === 'yes') cardiacIndicators.push('Exertional chest tightness/pressure (classic cardiac)');
+            if (edema === 'yes' || edema === 'mild') cardiacIndicators.push('Edema / fluid retention');
+            if (orthopnea === 'yes' || orthopnea === 'sometimes') cardiacIndicators.push('Orthopnea (SOB lying flat)');
+            if (hypertension === 'yes') cardiacIndicators.push('Known hypertension');
+
+            const respIndicators = [];
+            if (deepBreath === 'yes') respIndicators.push('Pain/SOB worsened by deep breathing/coughing (pulmonary pattern)');
+            if (chronicCough === 'yes' || chronicCough === 'dry') respIndicators.push('Persistent cough');
+            if (wheezing === 'yes' || wheezing === 'sometimes') respIndicators.push('Wheezing');
+            if (asthmaTriggers === 'yes' || asthmaTriggers === 'partial') respIndicators.push('Triggered by allergens/exercise/weather (asthma pattern)');
+
+            // Age-specific note for results
+            let ageNote = '';
+            if (age !== null) {
+                if (age < 40) ageNote = `At ${age}, age-related risk is minimal.`;
+                else if (age < 60) ageNote = `At ${age}, age is a moderate risk factor.`;
+                else ageNote = `At ${age}, age is a significant risk factor for both conditions.`;
+            }
+
+            return {
+                cardioScore, respScore, primary, secondary, primaryScore, secondaryScore,
+                riskLevel, cardiacIndicators, respIndicators, age, ageNote,
+                raw: { age, sex, smoking, exertionChest, deepBreath, chronicCough, wheezing, edema, orthopnea, asthmaTriggers, hypertension, diabetes, familyHistory }
+            };
+        }
+
+        // ----- Display Results -----
+        function displayResults() {
+            const data = computeResults();
+            const riskClass = 
+                data.riskLevel === 'Low' ? 'risk-low' :
+                data.riskLevel === 'Moderate' ? 'risk-moderate' :
+                data.riskLevel === 'High' ? 'risk-high' : 'risk-veryhigh';
+
+            let indicatorsHtml = '';
+            if (data.cardiacIndicators.length) {
+                indicatorsHtml += `<div style="margin-top:8px;"><strong>❤️ Cardiac indicators:</strong> ${data.cardiacIndicators.join('; ')}</div>`;
+            }
+            if (data.respIndicators.length) {
+                indicatorsHtml += `<div style="margin-top:6px;"><strong>🫁 Respiratory indicators:</strong> ${data.respIndicators.join('; ')}</div>`;
+            }
+            if (!data.cardiacIndicators.length && !data.respIndicators.length) {
+                indicatorsHtml = `<div style="margin-top:8px; color:#3d5f7a;">No specific clinical indicators strongly flagged.</div>`;
+            }
+
+            resultContent.innerHTML = `
+                <h2>📋 Assessment Results</h2>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:8px;">
+                    <span class="risk-badge ${riskClass}">${data.riskLevel} Risk (${data.primary} predominant)</span>
+                    <span style="background:#e9f2fc; padding:4px 16px; border-radius:40px; font-size:0.85rem; color:#1a4b7a;">
+                        🎂 Age: ${data.age} years
+                    </span>
+                </div>
+                <div style="background:#eaf4fa; border-radius:12px; padding:10px 16px; margin-bottom:14px; font-size:0.9rem; color:#1a4b7a;">
+                    ${data.ageNote}
+                </div>
+                <div class="score-grid">
+                    <div class="score-item">
+                        <div class="label">❤️ Cardiovascular score</div>
+                        <div class="value">${data.cardioScore.toFixed(1)} / 10</div>
+                        <div class="sub">${data.cardioScore >= 5 ? '↑ Elevated' : 'Within range'}</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="label">🫁 Respiratory score</div>
+                        <div class="value">${data.respScore.toFixed(1)} / 10</div>
+                        <div class="sub">${data.respScore >= 5 ? '↑ Elevated' : 'Within range'}</div>
+                    </div>
+                </div>
+                <div style="background:white; border-radius:14px; padding:12px 16px; border:1px solid #e3ebf6; margin:8px 0 8px 0;">
+                    <strong>Primary concern:</strong> ${data.primary} (score ${data.primaryScore.toFixed(1)})<br/>
+                    <strong>Secondary:</strong> ${data.secondary} (score ${data.secondaryScore.toFixed(1)})
+                </div>
+                ${indicatorsHtml}
+                <div class="disclaimer">
+                    <strong>⚕️ Important:</strong> This is a risk assessment tool based on symptoms and risk factors. 
+                    It is <strong>not a medical diagnosis</strong>. Please consult a healthcare provider for 
+                    proper evaluation, especially if you have persistent symptoms.
+                </div>
+                <button class="btn-restart" id="restartBtn">🔄 Start over</button>
+            `;
+
+            form.style.display = 'none';
+            resultsPanel.style.display = 'block';
+            document.querySelector('.progress-wrap').style.display = 'none';
+            document.querySelector('.step-indicator').style.display = 'none';
+            document.querySelector('hr').style.display = 'none';
+            document.querySelector('.subhead').innerHTML = '📊 Your personalized NCD risk profile — based on the symptoms you reported.';
+
+            document.getElementById('restartBtn').addEventListener('click', () => {
+                location.reload();
+            });
+        }
+
+        // ----- Event Binding -----
+        prevBtn.addEventListener('click', prevStep);
+        nextBtn.addEventListener('click', nextStep);
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isCurrentStepValid()) {
+                displayResults();
+            } else {
+                alert('Please complete all questions on this page before submitting.');
+            }
+        });
+
+        document.querySelectorAll('input[type="radio"]').forEach(r => {
+            r.addEventListener('change', updateNextButton);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.closest('.question-section')) {
+                if (currentStep === totalSteps - 1) {
+                    if (!submitBtn.disabled) submitBtn.click();
+                } else {
+                    if (!nextBtn.disabled) nextBtn.click();
+                }
+            }
+        });
+
+        // ----- Init -----
+        function initForm() {
+            showStep(0);
+            updateNextButton();
+            // Initial age note
+            ageRiskNote.textContent = 'Enter your age to see personalized risk assessment.';
+        }
+        initForm();
+
+    })();
+</script>
+
+</body>
+</html>
